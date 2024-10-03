@@ -1,0 +1,169 @@
+﻿@page "{type}/{Message?}"
+@model FormMaker.Pages.PageFormModel
+@{
+    ViewData["Title"] = "Создание формы";
+}
+
+<div class="container-fluid">
+    <form method="post" class="row g-3">
+        @if (Model.IsDaughter)
+        {
+            <div class="col-auto me-auto">
+                <label for="inputMaster" class="form-label">Мастер-форма</label>
+                <input class="form-control" id="search_inp" placeholder="Искать..." type="text" />
+            </div>
+            <div class="col-md-12">
+                <select class="form-select" id="form_list" asp-for="@Model.FormMaster" asp-items="Model.Items" size="10"></select>
+            </div>
+            <div class="row editform">
+                <div class="col-md-3">
+                    <label for="disabledTextInput" class="form-label">ID</label>
+                    <input type="text" value="@Model.FormID" class="form-control" name="FormID" id="disabledTextInput" disabled>
+                </div>
+                <div class="col-md-3">
+                    <label for="Regulations" class="form-label">Регламент ввода форм</label>
+                    <select class="form-select" asp-for="@Model.Regulations" name="Regulations" asp-items="@Model.ListOfRegulations"></select>
+                </div>
+            </div>
+            <div class="row editform">
+                <div class="col-md-6">
+                    <label for="inputName" class="form-label">Полное название</label>
+                    <input type="text" class="form-control" name="Name" id="inputName" value="@Model.Form.name">
+                </div>
+                <div class="col-md-3">
+                    <label for="inputShort" class="form-label">Короткое название</label>
+                    <input type="text" class="form-control" name="ShortName" id="inputNShort" value="@Model.Form.shortName" maxlength="250">
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row editform">
+                <div class="col-md-3">
+                    <label for="disabledTextInput" class="form-label">ID</label>
+                    <input type="text" value="@Model.FormID" class="form-control" name="FormID" id="disabledTextInput" disabled>
+                </div>
+                <div class="col-md-3">
+                    <label for="Periodic" class="form-label">Переодичность</label>
+                    <select class="form-select" asp-for="@Model.Periodic" name="Periodic" asp-items="@Form.ListOfPeriod"></select>
+                </div>
+                @if (!Model.IsMaster)
+                {
+                    <div class="col-md-3">
+                        <label for="Regulations" class="form-label">Регламент ввода форм</label>
+                        <select class="form-select" asp-for="@Model.Regulations" name="Regulations" asp-items="@Model.ListOfRegulations"></select>
+                    </div>
+                }
+                <div class="col-md-3">
+                    <label for="FormKind" class="form-label">Виды форм</label>
+                    <select class="form-select" name="FormKind" id="FormKind" asp-for="@Model.FormKind">
+                        <option value=0>Выберите вид формы</option>
+                        <option value=1>Учет(Предприятия)</option>
+                        <option value=2>Учет(ЭП объекты)</option>
+                        <option value=3>Учет(КР объекты)</option>
+                        <option value=4>Учет(Территории)</option>
+                    </select>
+                </div>                
+            </div>
+            <div class="row editform">
+                <div class="col-md-6">
+                    <label for="inputName" class="form-label">Полное название</label>
+                    <input type="text" class="form-control" name="Name" id="inputName" value="@Model.Form.name">
+                </div>
+                <div class="col-md-3">
+                    <label for="inputShort" class="form-label">Короткое название</label>
+                    <input type="text" class="form-control" name="ShortName" id="inputShort" value="@Model.Form.shortName" maxlength="250">
+                </div>
+                @if (Model.IsAnalitic)
+                {
+                    <div class="col-md-3">
+                        <label id="ModeVertical" class="form-label">Cпособ формирования вертикали</label>
+                        <select class="form-select" name="ModeVertical" id="ModeVertical" asp-for="@Model.ModeVertical">
+                            <option value=0>Пусто или структура</option>
+                            <option value=3>Переменная по территориям</option>
+                            <option value=8>Переменная по ОКВЭД</option>
+                            <option value=10>Переменная по реестру субъектов (в т.ч. реестровые формы)</option>
+                            <option value=11>Переменная по реестру объектов (в т.ч. реестровые формы)</option>
+                            <option value=13>Переменная по дислокациям</option>
+                            <option value=13>Переменная по дислокациям альтернативная (с расширенными наименованиями территории и kind)</option>
+                            <option value=15>Переменная по дислокациям с добавлением уровней (возможно пустых 1-3 в зависимости от kind территории логина)</option>
+                            <option value=20>Переменная по территориям/субъектам</option>
+                            <option value=21>Переменная по территориям/объектам</option>
+                            <option value=30>Переменная по ОКВЭД/субъектам</option>
+                            <option value=40>Переменная по субъектам/объектам</option>
+                        </select>
+                    </div>
+                }
+            </div>
+            <div class="row editform">
+                <div class="col-md-3">
+                    <label for="inputNote" class="form-label">Заметки</label>
+                    <input type="text" class="form-control" name="Note" id="inputNote" value="@Model.Form.note">
+                </div>
+                <div class="col-md-3">
+                    <label for="inputDepartment" class="form-label">Департамент</label>
+                    <input type="text" class="form-control" name="Department" id="inputDepartment" value="@Model.Form.department" maxlength="250">
+                </div>
+                <div class="col-md-3">
+                    <label for="Since" class="form-label">Действует с..</label>
+                    <input type="date" class="form-control" name="Since" id="Since" asp-for="@Model.Form.since">
+                </div>
+            </div>
+            <div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="HasSubject" asp-for="@Model.Form.hassubject" id="HasSubject">
+                    <label class="form-check-label" @* for="HasSubject" *@>
+                        Свод по предприятиям
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="HasFacility" asp-for="@Model.Form.hasfacility" id="HasFacility">
+                    <label class="form-check-label" for="HasFacility">
+                        Свод по объектам
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="HasTerritory" asp-for="@Model.Form.hasterritory" id="HasTerritory">
+                    <label class="form-check-label" for="HasTerritory">
+                        Свод по территориям
+                    </label>
+                </div>
+            </div>
+        }
+        <div class="d-grid gap-2 d-md-block">
+            <button type="submit" asp-page-handler="create" asp-route-type="@Model.TypeForm" class="btn btn-primary">Продолжить</button>
+            <button type="submit" asp-page-handler="cancel" class="btn btn-secondary">Отменить изменения</button>
+        </div>
+    </form>
+    @if (!string.IsNullOrEmpty(@Model.Message))
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div class="toast text-white bg-danger border-0"
+                 id="FormToast"
+                 role="alert"
+                 aria-live="assertive"
+                 aria-atomic="true">
+
+                <div class="d-flex">
+                    <div class="toast-body">
+                        @Model.Message
+                    </div>
+                    <button type="button"
+                            class="btn-close btn-close-white me-2 m-auto"
+                            data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        var toastElList = [].slice.call(document.querySelectorAll('#FormToast'));
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl);
+        });
+        toastList.forEach(toast => toast.show());
+    </script>
+}

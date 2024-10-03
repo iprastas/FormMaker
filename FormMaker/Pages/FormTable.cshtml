@@ -1,0 +1,83 @@
+﻿@page "{ind?}"
+@model FormMaker.Pages.FormTableModel
+@{
+    ViewData["Title"] = "Форма";
+}
+
+<div class="container-fluid">
+    <h2 class="editform">@Model.Name</h2> 
+    <form method="post">
+        <table class="table table-hover table-bordered">
+            <thead>
+                <tr>
+                    @foreach (var col in Model.formColumns)
+                    {
+                        <th scope="col">@col.name</th> 
+                    }
+                    <th scope="col">Удалить строку</th>
+                </tr>
+            </thead>
+            <tbody>
+                    @foreach (var row in Model.formRows)
+                    {
+                        <tr>
+                        <th scope="row">@row.name</th>
+                        <th scope="row">@row.code</th>
+                        @for (var i=0; i< Model.formColumns.Count()-2; i++)
+                        {
+                            <td></td>
+                        }
+                        <th scope="col">
+                            <button type="submit" asp-page-handler="EditRow" asp-route-ind="@row.formrow" class="btn btn-outline-success actions" title="Изменить">
+                                <span>
+                                    <img src="~/pencil-square.svg">
+                                </span>
+                            </button>
+                            <button type="submit" asp-page-handler="DeleteRow" asp-route-ind="@row.formrow" class="btn btn-danger">
+                                <span>
+                                    <img src="~/trash3.svg">
+                                </span>
+                            </button>
+                        </th>
+                        </tr>
+                    }
+                    <tr>
+                    <th colspan="2">Удалить столбец</th>
+                    @foreach (var col in Model.formColumns)
+                    {
+                        @if (col.formcolumn != 0 && col.formcolumn != 1)
+                        {
+                            <th scope="col">
+                                <button type="submit" asp-page-handler="EditColumn" asp-route-ind="@col.formcolumn" class="btn btn-outline-success actions" title="Изменить">
+                                    <span>
+                                        <img src="~/pencil-square.svg">
+                                    </span>
+                                </button>
+                                <button type="submit" asp-page-handler="DeleteColumn" asp-route-ind="@col.formcolumn" class="btn btn-danger">
+                                    <span>
+                                        <img src="~/trash3.svg">
+                                    </span>
+                                </button>
+                            </th>
+                        }
+                    }
+                    <th></th>
+                    </tr>
+            </tbody>
+        </table>
+        <div class="d-grid gap-2 d-md-block">
+            <button type="submit" asp-page-handler="column" class="btn btn-primary">Создать столбец</button>
+            @if (Model.formColumns.Count() < 3)
+            {
+                <button type="submit" asp-page-handler="row" class="btn btn-primary" disabled>Создать строку</button>
+            }
+            else
+            {
+                <button type="submit" asp-page-handler="row" class="btn btn-primary">Создать строку</button>
+            }
+        </div>
+        <div class="editform">
+            <button type="submit" asp-page-handler="save" class="btn btn-success">Сохранить форму</button>
+        </div>       
+    </form>
+</div>

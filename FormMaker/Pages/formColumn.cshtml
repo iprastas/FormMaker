@@ -1,0 +1,496 @@
+﻿@page "{ind}.{Message?}"
+@model FormMaker.Pages.formColumnModel
+@{
+    ViewData["Title"] = "Создание столбца";
+}
+
+<div class="container-fluid">
+    <form method="post" class="row g-3">
+        <div class="row editform">
+            <div class="col-md-6">
+                <label for="inputName" class="form-label">Название</label>
+                <div class="row">
+                    <div class="col" style="display: flex;">
+                        <input type="text" class="form-control" name="ColName" id="inputName" value="@Model.ColName">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalName">?</button>
+                    </div>
+                </div>
+                <!-- Модальное окно -->
+                <div class="modal fade" id="exampleModalName" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Help</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                @switch (Model.Periodic)
+                                {
+                                    case 1:
+                                        <table border="1">
+                                            <caption>для форм с периодичностью год</caption>
+                                            <tr>
+                                                <th>макрос</th>
+                                                <th>расшифровка</th>
+                                            </tr>
+                                            <tr>
+                                                <td>ys</td>
+                                                <td>Дата начала тек.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>yf</td>
+                                                <td>Дата конца тек.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>y2s</td>
+                                                <td>Дата начала пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>y2f</td>
+                                                <td>Дата конца пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>y2-</td>
+                                                <td>Прешеств.Пред.год</td>
+                                            </tr>
+                                            <tr>
+                                                <td>y-</td>
+                                                <td>Пред.год</td>
+                                            </tr>
+                                            <tr>
+                                                <td>y</td>
+                                                <td>Тек.год</td>
+                                            </tr>
+                                        </table>
+                                        break;
+                                    case 2:
+                                        <table border="1">
+                                            <caption>для форм с периодичностью полгода</caption>
+                                            <tr>
+                                                <th>макрос</th>
+                                                <th>расшифровка</th>
+                                            </tr>
+                                            <tr>
+                                                <td>hs</td>
+                                                <td>Дата начала тек.полугодия</td>
+                                            </tr>
+                                            <tr>
+                                                <td>hf</td>
+                                                <td>Дата конец тек.полугодия</td>
+                                            </tr>
+                                             <tr>
+                                                <td>hy-</td>
+                                                <td>Тек.полугодие пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>h-y</td>
+                                                <td>Пред.полугодие</td>
+                                            </tr>
+                                            <tr>
+                                                <td>hy</td>
+                                                <td>Тек.полугодие</td>
+                                            </tr>
+                                        </table>
+                                        break;
+                                    case 4:
+                                        <table class="table" border="1">
+                                            <caption>для форм с периодичностью квартал</caption>
+                                            <tr>
+                                                <th>макрос</th>
+                                                <th>расшифровка</th>
+                                            </tr>
+                                            <tr>
+                                                <td>qs</td>
+                                                <td>Дата начала тек.квартала</td>
+                                            </tr>
+                                            <tr>
+                                                <td>qf</td>
+                                                <td>Дата конца тек.квартала</td>
+                                            </tr>
+                                            <tr>
+                                                <td>qy-</td>
+                                                <td>Тек.квартал пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>q-y</td>
+                                                <td>Пред квартал</td>
+                                            </tr>
+                                            <tr>
+                                                <td>qy</td>
+                                                <td>Тек.квартал</td>
+                                            </tr>
+                                            <tr>
+                                                <td>q+y</td>
+                                                <td>След квартал</td>
+                                            </tr>
+                                            <tr>
+                                                <td>q-s</td>
+                                                <td>Дата начала пред.квартала</td>
+                                            </tr>
+                                            <tr>
+                                                <td>q-f</td>
+                                                <td>Дата конца пред.квартала</td>
+                                            </tr>
+                                            <tr>
+                                                <td>q+s</td>
+                                                <td>Дата начала след.квартала</td>
+                                            </tr>
+                                            <tr>
+                                                <td>q+f</td>
+                                                <td>Дата конца след.квартала</td>
+                                            </tr>
+                                            <tr>
+                                                <td>qy1-s</td>
+                                                <td>Дата начала тек.квартала пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>qy1-f</td>
+                                                <td>Дата конца тек.квартала пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>qy2-s</td>
+                                                <td>Дата начала тек.квартала предшеств.пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>qy2-f</td>
+                                                <td>Дата конца тек.квартала предшеств.пред.года</td>
+                                            </tr>
+                                        </table>
+                                        break;
+                                    case 12:
+                                        <table border="1">
+                                            <caption>для форм с периодичностью месяц</caption>
+                                            <tr>
+                                                <th>макрос</th>
+                                                <th>расшифровка</th>
+                                            </tr>
+                                            <tr>
+                                                <td>ms</td>
+                                                <td>Дата начала тек.месяца</td>
+                                            </tr>
+                                            <tr>
+                                                <td>mf</td>
+                                                <td>Дата конца тек.месяца</td>
+                                            </tr>
+                                            <tr>
+                                                <td>my-</td>
+                                                <td>Тек.месяц пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>m-y</td>
+                                                <td>Пред.месяц</td>
+                                            </tr>
+                                            <tr>
+                                                <td>my</td>
+                                                <td>Тек.месяц</td>
+                                            </tr>
+                                        </table>
+                                        break;
+                                    case 36:
+                                        <table border="1">
+                                            <caption>для форм с периодичностью декада</caption>
+                                            <tr>
+                                                <th>макрос</th>
+                                                <th>расшифровка</th>
+                                            </tr>
+                                            <tr>
+                                                <td>ts</td>
+                                                <td>Дата начала тек.декады</td>
+                                            </tr>
+                                            <tr>
+                                                <td>tf</td>
+                                                <td>Дата конца тек.декады</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ty-</td>
+                                                <td>Тек.декада пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>t-y</td>
+                                                <td>Пред.декада</td>
+                                            </tr>
+                                            <tr>
+                                                <td>ty</td>
+                                                <td>Тек.декада</td>
+                                            </tr>
+                                        </table>
+                                        break;
+                                    case 52:
+                                        <table border="1">
+                                            <caption>для форм с периодичностью неделя</caption>
+                                            <tr>
+                                                <th>макрос</th>
+                                                <th>расшифровка</th>
+                                            </tr>
+                                            <tr>
+                                                <td>ws</td>
+                                                <td>Дата начала тек.недели</td>
+                                            </tr>
+                                            <tr>
+                                                <td>wf</td>
+                                                <td>Дата конца тек.недели</td>
+                                            </tr>
+                                            <tr>
+                                                <td>wy-</td>
+                                                <td>Тек.неделя пред.года</td>
+                                            </tr>
+                                            <tr>
+                                                <td>w-y</td>
+                                                <td>Пред.неделя</td>
+                                            </tr>
+                                            <tr>
+                                                <td>wy</td>
+                                                <td>Тек.неделя</td>
+                                            </tr>
+                                        </table>
+                                        break;
+                                    case 365:
+                                        <table border="1">
+                                            <caption>для форм с периодичностью день</caption>
+                                            <tr>
+                                                <th>макрос</th>
+                                                <th>расшифровка</th>
+                                            </tr>
+                                            <tr>
+                                                <td>ds</td>
+                                                <td>Тек.дата</td>
+                                            </tr>
+                                            <tr>
+                                                <td>d-y</td>
+                                                <td>Пред.день</td>
+                                            </tr>
+                                            <tr>
+                                                <td>dy</td>
+                                                <td>Тек.день</td>
+                                            </tr>
+                                        </table>
+                                        break;
+                                }
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="Type" class="form-label">Тип</label>
+                <select class="form-select" asp-for="Type" name="Type" asp-items="@FormColumn.ListOfType"></select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputNote" class="form-label">Заметки</label>
+                <input type="text" class="form-control" name="Note" id="inputNote" value="@Model.Note">
+            </div>
+        </div>
+        <div class="row editform">
+            <div class="col-md-4">
+                <label for="inputCompute" class="form-label">Внутреформенные расчеты</label>
+                <div class="row">
+                    <div class="col" style="display: flex;">
+                        <input type="text" class="form-control" name="Compute" id="inputCompute" value="@Model.Compute">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCompute">?</button>
+                    </div>
+                </div>
+                <!-- Модальное окно -->
+                <div class="modal fade" id="exampleModalCompute" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Help</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                Пример: 100*([3]/[5]-1) содержимое 3 колонки поделить на значение в 5, вычесть 1 и умножить на 100
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* @if (Model.Periodic == 1 && Model.Periodic == 2 && Model.Periodic == 4 && Model.Periodic == 12 && Model.Periodic == 52 && Model.Periodic == 365)
+            {
+                
+            } *@
+            <div class="col-md-4">
+                <label for="inputPrecompute" class="form-label">Данные предыдущих периодов</label>
+                <div class="row">
+                    <div class="col" style="display: flex;">
+                        <select class="form-select" id="inputPrecompute" asp-for="Precompute">
+                            <option value="0" selected>Откройте это меню выбора</option>
+                            @switch (Model.Periodic)
+                            {
+                                case 1:
+                                    <option value="y-">Пред.год</option>
+                                    <option value="y2-">Прешеств.Пред.год</option>
+                                    break;
+                                case 2:
+                                    <option value="h2-y">Прешеств.Пред.полугодие</option>
+                                    <option value="h-y">Пред.полугодие</option>
+                                    <option value="hy-">Тек.полугодие пред.год</option>
+                                    <option value="hy2-">Тек.полугодие Прешеств.пред.год</option>
+                                    <option value="h1y">1 полугодие тек.год</option>
+                                    <option value="h2y">2 полугодие тек.год</option>
+                                    <option value="h1y-">1 полугодие пред.год</option>
+                                    <option value="h2y-">2 полугодие пред.год</option>
+                                    break;
+                                case 4:
+                                    <option value="q-y">Пред.квартал тек.год</option>
+                                    <option value="q2-y">Прешеств.Пред.квартал тек.год</option>
+                                    <option value="q1y">1 квартал тек.год</option>
+                                    <option value="q2y">2 квартал тек.год</option>
+                                    <option value="q3y">3 квартал тек.год</option>
+                                    <option value="q4y">4 квартал тек.год</option>
+                                    <option value="qy-">Тек.квартал пред.год</option>
+                                    <option value="qy2-">Тек.квартал Прешеств.пред.год</option>
+                                    <option value="q1y-">1 квартал пред.год</option>
+                                    <option value="q2y-">2 квартал пред.год</option>
+                                    <option value="q3y-">3 квартал пред.год</option>
+                                    <option value="q4y-">4 квартал пред.год</option>
+                                    break;
+                                case 12:
+                                    <option value="m-y">Пред.месяц тек.год</option>
+                                    <option value="m2-y">Прешеств.Пред.месяц тек.год</option>
+                                    <option value="m1y">1 месяц тек.год</option>
+                                    <option value="m2y">2 месяц тек.год</option>
+                                    <option value="m3y">3 месяц тек.год</option>
+                                    <option value="m4y">4 месяц тек.год</option>
+                                    <option value="m5y">5 месяц тек.год</option>
+                                    <option value="m6y">6 месяц тек.год</option>
+                                    <option value="m7y">7 месяц тек.год</option>
+                                    <option value="m8y">8 месяц тек.год</option>
+                                    <option value="m9y">9 месяц тек.год</option>
+                                    <option value="m10y">10 месяц тек.год</option>
+                                    <option value="m11y">11 месяц тек.год</option>
+                                    <option value="m12y">12 месяц тек.год</option>
+                                    <option value="my-">Тек.месяц пред.год</option>
+                                    <option value="my2-">Тек.месяц Прешеств.пред.год</option>
+                                    <option value="m1y-">1 месяц пред.год</option>
+                                    <option value="m2y-">2 месяц пред.год</option>
+                                    <option value="m3y-">3 месяц пред.год</option>
+                                    <option value="m4y-">4 месяц пред.год</option>
+                                    <option value="m5y-">5 месяц пред.год</option>
+                                    <option value="m6y-">6 месяц пред.год</option>
+                                    <option value="m7y-">7 месяц пред.год</option>
+                                    <option value="m8y-">8 месяц пред.год</option>
+                                    <option value="m9y-">9 месяц пред.год</option>
+                                    <option value="m10y-">10 месяц пред.год</option>
+                                    <option value="m11y-">11 месяц пред.год</option>
+                                    <option value="m12y-">12 месяц пред.год</option>
+                                    break;
+                                case 52:
+                                    <option value="wy">Тек.неделя тек.год</option>
+                                    <option value="w-y">Пред.неделя тек.год</option>
+                                    <option value="w2-y">Прешеств.Пред.неделя тек.год</option>
+                                    break;
+                                case 365:
+                                    <option value="dy">Тек.день тек.год</option>
+                                    <option value="d7-y">7 дней назад</option>
+                                    <option value="d30-y">30 дней назад</option>
+                                    break;
+                            }
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <label for="inputOutercompute" class="form-label">Межформенные расчеты</label>
+                <div class="row">
+                    <div class="col" style="display: flex;">
+                        <input type="text" class="form-control" name="Outercompute" id="inputOutercompute" value="@Model.Outercompute">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalOuter">?</button>
+                    </div>
+                </div>
+                
+                <!-- Модальное окно -->
+                <div class="modal fade" id="exampleModalOuter" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Help</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                Пример: [32,42,3] + [30,2,3]
+                                Сложить данные 32 формы 42 строки 3 колонки  с данными 30 формы 2 строки 3 колонки
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row editform">
+            <div class="col-md-3">
+                @if (Model.TypeForm == "Analitic")
+                {
+                    <label for="selectSumm" class="form-label">Выводить свод?</label>
+                }
+                else
+                {
+                    <label for="selectSumm" class="form-label">Данные подлежат своду?</label>
+                }
+                <select class="form-select" name="Summation" id="selectSumm" asp-for="@Model.Summation">
+                    <option value="0">Неопределено</option>
+                    <option value="1">Нет</option>
+                    <option value="2">Да</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="selectMandatory" class="form-label">Данные обязательны для ввода?</label>
+                <select class="form-select" name="Mandatory" id="selectMandatory" asp-for="@Model.Mandatory">
+                    <option value="0">Неопределено</option>
+                    <option value="1">Нет</option>
+                    <option value="2">Да</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="selectCopying" class="form-label">Участвует в копировании?</label>
+                <select class="form-select" name="Copying" id="selectCopying" asp-for="@Model.Copying">
+                    <option value="0">Неопределено</option>
+                    <option value="1">Нет</option>
+                    <option value="2">Да</option>
+                </select>
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button type="submit" asp-page-handler="create" class="btn btn-primary">Продолжить</button>
+            <button type="submit" asp-page-handler="cancel" class="btn btn-secondary">Отменить изменения</button>
+        </div>
+    </form>
+    @if (!string.IsNullOrEmpty(@Model.Message))
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div class="toast text-white bg-danger border-0"
+                 id="NameColToast"
+                 role="alert"
+                 aria-live="assertive"
+                 aria-atomic="true">
+
+                <div class="d-flex">
+                    <div class="toast-body">
+                        @Model.Message
+                    </div>
+                    <button type="button"
+                            class="btn-close btn-close-white me-2 m-auto"
+                            data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts
+{
+    <script>
+        var toastElList = [].slice.call(document.querySelectorAll('#NameColToast'));
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl);
+        });
+        toastList.forEach(toast => toast.show());
+    </script>
+}

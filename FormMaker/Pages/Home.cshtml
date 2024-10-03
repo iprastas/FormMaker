@@ -1,0 +1,129 @@
+﻿@page "{Message?}"
+@model FormMaker.Pages.HomeModel
+@{
+	ViewData["Title"] = "Выбор типа формы";
+}
+
+<div class="container-xxl">
+	<form method="post" enctype="multipart/form-data" class="row" style="
+    display: flex;
+    justify-content: space-between;">
+		<div class="col-5">
+			<div>
+				<p class="h3">Создание формы</p>
+				<p class="fs-4">Виды форм</p>
+
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="TypeForm" value="Master">
+					<label class="form-check-label">
+						Master
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="TypeForm" value="Daughter">
+					<label class="form-check-label">
+						Дочерние
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="TypeForm" value="Simple">
+					<label class="form-check-label">
+						Простые
+					</label>
+				</div>
+				<div class="form-check">
+					<input class="form-check-input" type="radio" name="TypeForm" value="Analitic">
+					<label class="form-check-label">
+						Аналитические
+					</label>
+				</div>
+			</div>
+			<button type="submit" asp-page-handler="create" class="btn btn-primary btn-block mb-3" style="margin-top: 20px; margin-left: 10px;">Создать форму</button>
+			
+			<p class="h3">Создание формы из файла</p>
+			<div class="mb-3">
+				<label for="formFile" class="form-label">Выберите файл для создания формы</label>
+				<input class="form-control" type="file" id="formFile" name="formFile">
+			</div>
+			<div class="d-grid gap-2 d-md-block">
+				<button type="submit" asp-page-handler="open" class="btn btn-success">Загрузить файл</button>
+			</div>
+		</div>
+		<div class="col-5">
+			<p class="h3">Редактирование формы</p>
+			
+			<div>
+				<select class="form-select" id="LastWeekForm" asp-for="@Model.Form" asp-items="Model.LastWeekForm" size="10"></select>
+			</div>
+			<div class="d-grid gap-2 d-md-block" style="margin-top: 15px;">
+				<button type="submit" asp-page-handler="continue" class="btn btn-primary">Редактировать форму</button>
+			</div>
+			<div class="d-grid gap-2 d-md-block" style="margin-top: 5px;">
+				<button type="submit" asp-page-handler="clear" class="btn btn-outline-primary">Очистить данные</button>
+				@if (Model.LastWeekForm.Count() == 0)
+				{
+					<button type="submit" asp-page-handler="delete" class="btn btn-secondary" disabled>Удалить форму</button>
+				}
+				else
+				{
+					<button type="submit" asp-page-handler="delete" class="btn btn-secondary">Удалить форму</button>
+				}
+			</div>
+		</div>
+
+	</form>
+	
+	@if (!string.IsNullOrEmpty(@Model.Message))
+	{
+		<div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+			@if (Model.Success)
+			{
+				<div class="toast text-white bg-success border-0"
+					 id="bottomToast"
+					 role="alert"
+					 aria-live="assertive"
+					 aria-atomic="true">
+
+					<div class="d-flex">
+						<div class="toast-body">
+							@Model.Message
+						</div>
+						<button type="button"
+								class="btn-close btn-close-white me-2 m-auto"
+								data-bs-dismiss="toast"
+								aria-label="Close"></button>
+					</div>
+				</div>
+			}
+			else
+			{
+				<div class="toast text-white bg-danger border-0"
+					 id="bottomToast"
+					 role="alert"
+					 aria-live="assertive"
+					 aria-atomic="true">
+
+					<div class="d-flex">
+						<div class="toast-body">
+							@Model.Message
+						</div>
+						<button type="button"
+								class="btn-close btn-close-white me-2 m-auto"
+								data-bs-dismiss="toast"
+								aria-label="Close"></button>
+					</div>
+				</div>
+			}
+		</div>
+	}
+</>
+@section Scripts
+{
+	<script>
+		var toastElList = [].slice.call(document.querySelectorAll('#bottomToast'));
+		var toastList = toastElList.map(function (toastEl) {
+			return new bootstrap.Toast(toastEl);
+		});
+		toastList.forEach(toast => toast.show());
+	</script>
+}

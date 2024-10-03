@@ -1,0 +1,142 @@
+﻿@page "{ind}.{Message?}"
+@model FormMaker.Pages.formRowModel
+@{
+    ViewData["Title"] = "Создание строки";
+}
+
+<div class="container-fluid">
+    <form method="post" class="row g-3">
+        <div class="row editform">
+            <div class="col-md-3">
+                <label for="inputCode" class="form-label">Код</label>
+                <input type="text" class="form-control" name="Code" id="inputCode" value="@Model.Code" maxlength="30">
+            </div>
+            <div class="col-md-6">
+                <label for="inputName" class="form-label">Название</label>
+                <input type="text" class="form-control" name="Name" id="inputName" value="@Model.Name">
+            </div>
+            <div class="col-md-3">
+                <label for="Type" class="form-label">Тип</label>
+                <select class="form-select" id="Type" asp-for="Type" name="Type" asp-items="@FormRow.ListOfType"></select>
+            </div>
+        </div>
+        <div class="row editform">
+            <div class="col-md-3">
+                <label for="inputBalance" class="form-label">Балансовый знак</label>
+                <input type="text" class="form-control" name="Balancesign" id="inputBalance" value="@Model.Balancesign" maxlength="3">
+            </div>
+            <div class="col-md-3">
+                <label for="inputOKP" class="form-label">ОКП</label>
+                <input type="text" class="form-control" name="Okp" id="inputOKP" value="@Model.Okp" maxlength="255">
+            </div>
+            <div class="col-md-3">
+                <label for="Units" class="form-label">Стандартные единицы измерения</label>
+                <select class="form-select" id="Units" asp-for="Unit" name="Unit" asp-items="@Model.Units"></select>
+            </div>
+            <div class="col-md-3">
+                <label for="inputMeasure" class="form-label">Единицы измерения</label>
+                <input type="text" class="form-control" name="Measure" id="inputMeasure" value="@Model.Measure" maxlength="30">
+            </div>
+        </div>
+        <div class="row editform">
+            <div class="col-md-4">
+                <label for="inputCompute" class="form-label">Внутреформенные расчеты</label>
+                <div class="row">
+                    <div class="col" style="display: flex;">
+                        <input type="text" class="form-control" name="Compute" id="inputCompute" value="@Model.Compute">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModalCompute">?</button>
+                    </div>
+                </div>
+                <!-- Модальное окно -->
+                <div class="modal fade" id="exampleModalCompute" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Help</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                            </div>
+                            <div class="modal-body">
+                                Пример: 100*([3]/[5]-1) содержимое 3 колонки поделить на значение в 5, вычесть 1 и умножить на 100
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label for="inputNote" class="form-label">Заметки</label>
+                <input type="text" class="form-control" name="Note" id="inputNote" value="@Model.Note">
+            </div>
+        </div>
+        <div class="row editform">
+             <div class="col-md-3">
+                @if (Model.TypeForm == "Analitic")
+                {
+                    <label for="selectSumm" class="form-label">Выводить свод?</label>
+                }
+                else
+                {
+                    <label for="selectSumm" class="form-label">Данные подлежат своду?</label>
+                }
+                <select class="form-select" name="Summation" id="selectSumm" asp-for="@Model.Summation">
+                    <option value="0">Неопределено</option>
+                    <option value="1">Нет</option>
+                    <option value="2">Да</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="selectMandatory" class="form-label">Данные обязательны для ввода?</label>
+                <select class="form-select" name="Mandatory" id="selectMandatory" asp-for="@Model.Mandatory">
+                    <option value="0">Неопределено</option>
+                    <option value="1">Нет</option>
+                    <option value="2">Да</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="selectCopying" class="form-label">Участвует в копировании?</label>
+                <select class="form-select" name="Copying" id="selectCopying" asp-for="@Model.Copying">
+                    <option value="0">Неопределено</option>
+                    <option value="1">Нет</option>
+                    <option value="2">Да</option>
+                </select>
+            </div>
+        </div>
+        <div class="d-grid gap-2 d-md-block">
+            <button type="submit" asp-page-handler="create" class="btn btn-primary">Продолжить</button>
+            <button type="submit" asp-page-handler="cancel" class="btn btn-secondary">Отменить изменения</button>
+        </div>
+    </form>
+    @if (!string.IsNullOrEmpty(@Model.Message))
+    {
+        <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 11">
+            <div class="toast text-white bg-danger border-0"
+                 id="NameRowToast"
+                 role="alert"
+                 aria-live="assertive"
+                 aria-atomic="true">
+
+                <div class="d-flex">
+                    <div class="toast-body">
+                        @Model.Message
+                    </div>
+                    <button type="button"
+                            class="btn-close btn-close-white me-2 m-auto"
+                            data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+@section Scripts
+    {
+    <script>
+        var toastElList = [].slice.call(document.querySelectorAll('#NameRowToast'));
+        var toastList = toastElList.map(function (toastEl) {
+            return new bootstrap.Toast(toastEl);
+        });
+        toastList.forEach(toast => toast.show());
+    </script>
+}
